@@ -1,4 +1,4 @@
-package com.github.gauge.graphql;
+package com.github.ajoecker.gauge.graphql;
 
 import com.google.common.base.Strings;
 
@@ -57,7 +57,7 @@ public interface ConfigurationSource {
      * <p>
      * For example
      * <pre>
-     *     * When sending <file:/src/test/resources/query.graphql> with "size:4"
+     *     * When sending &lt;file:/src/test/resources/query.graphql&gt; with "size:4"
      * </pre>
      *
      * @return the seperator between variables

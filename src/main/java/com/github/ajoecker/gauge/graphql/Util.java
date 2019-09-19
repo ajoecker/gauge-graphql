@@ -1,4 +1,4 @@
-package com.github.gauge.graphql;
+package com.github.ajoecker.gauge.graphql;
 
 import com.thoughtworks.gauge.TableCell;
 import com.thoughtworks.gauge.TableRow;
