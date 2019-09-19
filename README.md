@@ -1,7 +1,9 @@
 # Gauge Graphql Test Project  
 ## Idea  
 To have a simple and easy-usable project for testing graphql.  
-  
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ajoecker/gauge-graphql/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.ajoecker/gauge-graphql)
+
 ## Implementation  
 The implementation uses [http://gauge.org](http://gauge.org) as describer and runner of the automated tests and [http://rest-assured.io/](http://rest-assured.io/) as helper library.  
   
