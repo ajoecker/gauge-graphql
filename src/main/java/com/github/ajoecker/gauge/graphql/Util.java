@@ -3,6 +3,7 @@ package com.github.ajoecker.gauge.graphql;
 import com.thoughtworks.gauge.TableCell;
 import com.thoughtworks.gauge.TableRow;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,8 +70,8 @@ public final class Util {
      *     {name: Pablo Picasso, nationality: Spanish}, {name: Banksy, nationality: British}
      * </pre>
      *
-     * @param value
-     * @return
+     * @param value map like string
+     * @return list of maps with a single key mapping
      */
     static List<Map<String, String>> parseMap(String value) {
         String[] values = value.trim().split("}" + COMMA_SEPERATED);

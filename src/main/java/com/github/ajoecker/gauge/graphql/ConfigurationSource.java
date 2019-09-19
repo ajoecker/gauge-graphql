@@ -27,8 +27,7 @@ public interface ConfigurationSource {
      * @return the mask or <code>$$</code> if non is defined
      */
     default String variableMask() {
-        String mask = System.getenv("graphql.variable.mask");
-        return Strings.isNullOrEmpty(mask) ? "$$" : mask;
+        return orDefault("graphql.variable.mask", "$$");
     }
 
     /**
@@ -45,8 +44,7 @@ public interface ConfigurationSource {
      * @return the seperator between multiple values
      */
     default String seperator() {
-        String seperator = System.getenv("graphql.seperator");
-        return Strings.isNullOrEmpty(seperator) ? "," : seperator;
+        return orDefault("graphql.seperator", ",");
     }
 
     /**
@@ -63,8 +61,12 @@ public interface ConfigurationSource {
      * @return the seperator between variables
      */
     default String variableSeperator() {
-        String vSep = System.getenv("graphql.variable.seperator");
-        return Strings.isNullOrEmpty(vSep) ? ":" : vSep;
+        return orDefault("graphql.variable.seperator", ":");
+    }
+
+    private String orDefault(String envKey, String defaultValue) {
+        String envValue = System.getenv(envKey);
+        return Strings.isNullOrEmpty(envValue) ? defaultValue : envValue;
     }
 
     /**

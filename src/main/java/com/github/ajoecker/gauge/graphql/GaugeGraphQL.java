@@ -98,5 +98,4 @@ public class GaugeGraphQL {
     private void assertResponse(String path, Matcher<?> matcher) {
         response.then().assertThat().body(prefix(path), matcher);
     }
-
 }
