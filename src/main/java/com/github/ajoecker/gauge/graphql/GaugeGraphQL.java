@@ -1,7 +1,7 @@
-package com.github.gauge.graphql;
+package com.github.ajoecker.gauge.graphql;
 
-import com.github.gauge.graphql.login.LoginHandler;
-import com.github.gauge.graphql.login.TokenBasedLogin;
+import com.github.ajoecker.gauge.graphql.login.LoginHandler;
+import com.github.ajoecker.gauge.graphql.login.TokenBasedLogin;
 import com.thoughtworks.gauge.Step;
 import com.thoughtworks.gauge.Table;
 import io.restassured.response.Response;
@@ -11,10 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.github.gauge.graphql.Util.*;
+import static com.github.ajoecker.gauge.graphql.Util.*;
 import static org.hamcrest.Matchers.*;
 
 /**
@@ -99,5 +98,4 @@ public class GaugeGraphQL {
     private void assertResponse(String path, Matcher<?> matcher) {
         response.then().assertThat().body(prefix(path), matcher);
     }
-
 }

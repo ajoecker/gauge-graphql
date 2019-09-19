@@ -1,6 +1,6 @@
-package com.github.gauge.graphql;
+package com.github.ajoecker.gauge.graphql;
 
-import com.github.gauge.graphql.login.LoginHandler;
+import com.github.ajoecker.gauge.graphql.login.LoginHandler;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;

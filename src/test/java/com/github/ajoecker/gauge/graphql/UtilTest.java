@@ -1,11 +1,14 @@
-package com.github.gauge.graphql;
+package com.github.ajoecker.gauge.graphql;
 
+import com.github.ajoecker.gauge.graphql.ConfigurationSource;
+import com.github.ajoecker.gauge.graphql.Util;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.github.gauge.graphql.Util.isMap;
+import static com.github.ajoecker.gauge.graphql.Util.isMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UtilTest {
@@ -86,5 +89,11 @@ public class UtilTest {
         };
         String s = Util.replaceVariablesInQuery(query, "size:2");
         assertEquals(s, queryReplaced);
+    }
+
+    @BeforeEach
+    private void reset() {
+        Util.configurationSource = new ConfigurationSource() {
+        };
     }
 }

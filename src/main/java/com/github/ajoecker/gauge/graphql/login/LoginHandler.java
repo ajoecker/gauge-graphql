@@ -1,6 +1,6 @@
-package com.github.gauge.graphql.login;
+package com.github.ajoecker.gauge.graphql.login;
 
-import com.github.gauge.graphql.GraphQLConnector;
+import com.github.ajoecker.gauge.graphql.GraphQLConnector;
 import io.restassured.specification.RequestSpecification;
 
 /**

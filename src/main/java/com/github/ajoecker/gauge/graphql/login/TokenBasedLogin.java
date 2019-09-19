@@ -1,7 +1,7 @@
-package com.github.gauge.graphql.login;
+package com.github.ajoecker.gauge.graphql.login;
 
-import com.github.gauge.graphql.GraphQLConnector;
-import com.github.gauge.graphql.Util;
+import com.github.ajoecker.gauge.graphql.GraphQLConnector;
+import com.github.ajoecker.gauge.graphql.Util;
 import com.google.common.base.Strings;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static com.github.gauge.graphql.Util.seperator;
+import static com.github.ajoecker.gauge.graphql.Util.seperator;
 import static java.nio.file.Files.readString;
 
 /**
