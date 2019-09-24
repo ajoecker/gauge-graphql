@@ -1,14 +1,17 @@
 package com.github.ajoecker.gauge.graphql;
 
-import com.github.ajoecker.gauge.graphql.ConfigurationSource;
-import com.github.ajoecker.gauge.graphql.Util;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.github.ajoecker.gauge.graphql.Util.isMap;
+import static com.github.ajoecker.gauge.graphql.Util.replaceVariablesInQuery;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UtilTest {
@@ -42,9 +45,9 @@ public class UtilTest {
     }
 
     @Test
-    public void replaceVariablesInQuery() {
+    public void replaceVariablesInQueryWorks() {
         String query = "{\n" +
-                "    popular_artists(size: $$size$$) {\n" +
+                "    popular_artists(size: $size) {\n" +
                 "        artists {\n" +
                 "            name\n" +
                 "            nationality\n" +
@@ -59,14 +62,13 @@ public class UtilTest {
                 "        }\n" +
                 "    }\n" +
                 "}";
-        String s = Util.replaceVariablesInQuery(query, "size:2");
-        assertEquals(s, queryReplaced);
+        assertEquals(replaceVariablesInQuery(query, "size:2", Optional.empty()), queryReplaced);
     }
 
     @Test
     public void replaceVariablesInQueryWithOwnFormat() {
         String query = "{\n" +
-                "    popular_artists(size: ##size##) {\n" +
+                "    popular_artists(size: ##size) {\n" +
                 "        artists {\n" +
                 "            name\n" +
                 "            nationality\n" +
@@ -87,8 +89,31 @@ public class UtilTest {
                 return "##";
             }
         };
-        String s = Util.replaceVariablesInQuery(query, "size:2");
-        assertEquals(s, queryReplaced);
+        assertEquals(replaceVariablesInQuery(query, "size:2", Optional.empty()), queryReplaced);
+    }
+
+    @Test
+    public void replaceVariablesInQueryWithVariablesWorks() {
+        String query = "{\n" +
+                "    popular_artists(size: $size) {\n" +
+                "        artists {\n" +
+                "            name\n" +
+                "            nationality\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        String queryReplaced = "{\n" +
+                "    popular_artists(size: 2) {\n" +
+                "        artists {\n" +
+                "            name\n" +
+                "            nationality\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        ExtractableResponse<Response> re = Mockito.mock(ExtractableResponse.class);
+        Mockito.when(re.path("data.foo")).thenReturn(2);
+
+        assertEquals(replaceVariablesInQuery(query, "size:$foo", Optional.of(re)), queryReplaced);
     }
 
     @BeforeEach

@@ -111,7 +111,7 @@ verification can start with `And` instead of `Then` for better reading purpose.
 It is possible to use dynamic graphql queries, when using variables in the graphql file.
 ##### Example
 ```
-popular_artists(size: $size$) {
+popular_artists(size: $size) {
     artists {
         name
         nationality
@@ -140,6 +140,21 @@ It is also possible to facilitate gauge table for dynamic replacement
 ```
 whereas the column headers must be named `name` and `value`.
 
+It is also possible to use the result of a previous request as substitute for a variable
+```
+## stations around Frankfurt with table
+* When sending <file:/src/test/resources/dbahn_frankfurt.graphql>
+* And sending <file:/src/test/resources/dbahn_frankfurt_nearby.graphql> with 
+
+   |name     |value                                |
+   |---------|-------------------------------------|
+   |latitude |$stationWithEvaId.location.latitude  | 
+   |longitude|$stationWithEvaId.location.longitude |
+   |radius   |2000                                 |
+```
+the first two values are masked to identify them as variables and contain the full path to a single value (list values are currently not supported).
+
+The values are used in the second request to replace any variables in the query named `latitude` and `longitude`.
 ## Configuration
 In the Gauge environment the following keys are recognized
  
@@ -165,7 +180,7 @@ Name of the file, containing the query for the login. This file must be located 
 #### Example
 ```
 mutation {  
-    login(email: "$user$", password: "$password$") {  
+    login(email: "$user", password: "$password") {  
         token  
     }  
 }
@@ -190,7 +205,7 @@ Defines the seperator in the verifying step to define multiple elements that nee
 Defines the string that masks a variable in the graphql file
 #### Example
 ```
-popular_artists(size: $size$) {
+popular_artists(size: $size) {
     artists {
         name
         nationality
