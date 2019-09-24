@@ -66,6 +66,11 @@ public class GaugeGraphQL {
         });
     }
 
+    @Step("Use <endpoint>")
+    public void useEndpoint(String enpoint) {
+        graphQLConnector.setEndpoint(enpoint);
+    }
+
     private void compare(Object value, Consumer<Object[]> match) {
         if (value instanceof String) {
             compareStringValue((String) value, match);

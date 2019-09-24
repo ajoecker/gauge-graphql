@@ -34,7 +34,17 @@ To add new test cases one can either create a new spec file with the scenario(s)
 existing spec.  
   
 ### Building blocks  
-To add a new test case (scenario) one can re-use existing building blocks for the sake of simplicity.  
+To add a new test case (scenario) one can re-use existing building blocks for the sake of simplicity. 
+
+#### Define graphql endpoint
+The library allows to ways for defining the graphql endpoint to test.
+
+- In the environment of Gauge with the key `graphql.endpoint`
+- In a spec file as a common step `* Use "http://the-endpoint`
+
+The first one can be used to define a common endpoint for all specs and can be varied by using multiple gauge environments.
+
+The second can be used to define an endpoint on a spec based level and allows more flexibility if needed.
   
 #### Login required  
 If a login is required to execute subsequent queries, the first step of a scenario must be
