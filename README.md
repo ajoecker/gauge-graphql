@@ -22,7 +22,7 @@ To use the library in a project simply put the following in the `pom.xml`
 <dependency>  
  <groupId>com.github.ajoecker</groupId>
  <artifactId>gauge-graphql</artifactId>
- <version>0.1</version>
+ <version>0.2</version>
  <scope>test</scope>
 </dependency>  
 ``` 
@@ -164,7 +164,7 @@ In the Gauge environment the following keys are recognized
 ### graphql.endpoint
 *Mandatory*
 
-The url to the graphql api
+The url to the graphql api. Only mandatory if the endpoint is not given in the spec file directly.
  
 ### graphql.debug
 *Optional*
