@@ -29,6 +29,9 @@ To use the library in a project simply put the following in the `pom.xml`
 As long as the library is not part of a maven central you can either add it directly in our project or install it
 in your local maven repository.
 
+## Examples
+The project [gauge-graphql-example](https://github.com/ajoecker/gauge-graphql-example) shows some examples of the usage.
+
 ## New Testcases  
 To add new test cases one can either create a new spec file with the scenario(s) or add the new scenario to an   
 existing spec.  
