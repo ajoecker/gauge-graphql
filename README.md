@@ -22,7 +22,7 @@ To use the library in a project simply put the following in the `pom.xml`
 <dependency>  
  <groupId>com.github.ajoecker</groupId>
  <artifactId>gauge-graphql</artifactId>
- <version>0.1</version>
+ <version>0.2</version>
  <scope>test</scope>
 </dependency>  
 ``` 
