@@ -13,6 +13,16 @@ import static io.restassured.RestAssured.given;
  * A simple connector to send graphql posts via restassured
  */
 public final class GraphQLConnector {
+    private String endpoint;
+
+    public GraphQLConnector() {
+        endpoint = System.getenv("graphql.endpoint");
+    }
+
+    void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
+
     public Response sending(String query) {
         return post(query, startRequest());
     }
@@ -27,7 +37,7 @@ public final class GraphQLConnector {
         return request.contentType(ContentType.JSON)
                 .body(Map.of("query", query))
                 .when()
-                .post(System.getenv("graphql.endpoint"));
+                .post(endpoint);
     }
 
     private RequestSpecification startRequest() {
