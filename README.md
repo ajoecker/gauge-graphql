@@ -164,7 +164,7 @@ In the Gauge environment the following keys are recognized
 ### graphql.endpoint
 *Mandatory*
 
-The url to the graphql api
+The url to the graphql api. Only mandatory if the endpoint is not given in the spec file directly.
  
 ### graphql.debug
 *Optional*
