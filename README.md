@@ -111,7 +111,7 @@ verification can start with `And` instead of `Then` for better reading purpose.
 It is possible to use dynamic graphql queries, when using variables in the graphql file.
 ##### Example
 ```
-popular_artists(size: $$size$$) {
+popular_artists(size: $size$) {
     artists {
         name
         nationality
@@ -124,7 +124,7 @@ Like
  
  `* When sending <file:/src/test/resources/popular_artists_variable.graphql> with "size:4"`
  
-It is possible to configure the string that masks the variable in the graphql file (default: `$$`), via the configuration
+It is possible to configure the string that masks the variable in the graphql file (default: `$`), via the configuration
 `graphql.variable.mask`.
 
 It is also possible to configure the seperator that divides the variable name with the variable value in the step (default `:`), 
@@ -155,7 +155,7 @@ Name of the file, containing the query for the login. This file must be located 
 #### Example
 ```
 mutation {  
-    login(email: "$$user$$", password: "$$password$$") {  
+    login(email: "$user$", password: "$password$") {  
         token  
     }  
 }
@@ -180,7 +180,7 @@ Defines the seperator in the verifying step to define multiple elements that nee
 Defines the string that masks a variable in the graphql file
 #### Example
 ```
-popular_artists(size: $$size$$) {
+popular_artists(size: $size$) {
     artists {
         name
         nationality

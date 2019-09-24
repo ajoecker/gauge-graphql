@@ -15,7 +15,7 @@ public interface ConfigurationSource {
      * For example
      * <pre>
      *     {
-     *     popular_artists(size: $$size$$) {
+     *     popular_artists(size: $size$) {
      *         artists {
      *             name
      *             nationality
@@ -27,7 +27,7 @@ public interface ConfigurationSource {
      * @return the mask or <code>$$</code> if non is defined
      */
     default String variableMask() {
-        return orDefault("graphql.variable.mask", "$$");
+        return orDefault("graphql.variable.mask", "$");
     }
 
     /**
