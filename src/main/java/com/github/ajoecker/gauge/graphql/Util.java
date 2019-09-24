@@ -1,5 +1,6 @@
 package com.github.ajoecker.gauge.graphql;
 
+import com.thoughtworks.gauge.Table;
 import com.thoughtworks.gauge.TableCell;
 import com.thoughtworks.gauge.TableRow;
 
@@ -49,7 +50,19 @@ public final class Util {
         String[] splot = split(variables);
         for (String s : splot) {
             String[] keyValue = s.split(configurationSource.variableSeperator());
-            query = query.replace(configurationSource.mask(keyValue[0]), keyValue[1]);
+            query = doReplace(query, keyValue[0], keyValue[1]);
+        }
+        return query;
+    }
+
+    private static String doReplace(String query, String key, String replacement) {
+        return query.replace(configurationSource.mask(key.trim()), replacement.trim());
+    }
+
+    public static String replaceVariablesInQuery(String query, Table variables) {
+        List<TableRow> tableRows = variables.getTableRows();
+        for (TableRow row : tableRows) {
+            query = doReplace(query, row.getCell("name"), row.getCell("value"));
         }
         return query;
     }

@@ -130,6 +130,16 @@ It is possible to configure the string that masks the variable in the graphql fi
 It is also possible to configure the seperator that divides the variable name with the variable value in the step (default `:`), 
 via the configuration `graphql.variable.seperator`.
 
+It is also possible to facilitate gauge table for dynamic replacement
+```
+* When sending <file:/src/test/resources/popular_artists_variable.graphql> with 
+
+   |name|value|
+   |----|-----|
+   |size|4    |
+```
+whereas the column headers must be named `name` and `value`.
+
 ## Configuration
 In the Gauge environment the following keys are recognized
  

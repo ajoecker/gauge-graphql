@@ -29,9 +29,15 @@ public class GaugeGraphQL {
         response = graphQLConnector.sendingWithLogin(query, loginHandler);
     }
 
-    @Step("When sending <query> with <variables>")
-    public void sendingWithVariables(String query, String variables) {
-        response = graphQLConnector.sendingWithLogin(replaceVariablesInQuery(query, variables), loginHandler);
+    @Step({"When sending <query> with <variables>", "And sending <query> with <variables>"})
+    public void sendingWithVariables(String query, Object variables) {
+        if (variables instanceof String) {
+            response = graphQLConnector.sendingWithLogin(replaceVariablesInQuery(query, (String) variables), loginHandler);
+        } else if (variables instanceof Table) {
+            response = graphQLConnector.sendingWithLogin(replaceVariablesInQuery(query, (Table) variables), loginHandler);
+        } else {
+            throw new IllegalArgumentException("unknown variable types " + variables.getClass() + " for " + variables);
+        }
     }
 
     @Step("Given <user> logs in with password <password>")
