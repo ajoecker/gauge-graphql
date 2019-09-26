@@ -61,11 +61,13 @@ If the login is working on a common token and not a dynamic created one, the fir
 `Given user logs in`
   
 #### Sending graphql  
-To send a query/mutation one must create a file in the `src/test/resources` folder and use this file in the sending step  
+To send a query/mutation one creates a file in the `src/test/resources` folder and use this file in the sending step  
   
 `When sending <file:src/test/resources/the_file_to_send>`  
   
 whereas `the_file_to_send` is then the name of file.  
+
+*note* - it is not required to have the querie files inside the `resources` folder. They can reside in any folder relative to the project. The step definition `When sending...` must mirror then the path to the file.
   
 #### Verifying the result  
 To verify a response multiple building blocks exist. All of them can either start with `Then` or when chaining multiple verifications with `And`.  
