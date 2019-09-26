@@ -125,7 +125,7 @@ When using variables, the `When` step in the spec file must replace this variabl
 
 Like
  
- `* When sending <file:/src/test/resources/popular_artists_variable.graphql> with "size:4"`
+ `* When sending <file:src/test/resources/popular_artists_variable.graphql> with "size:4"`
  
 It is possible to configure the string that masks the variable in the graphql file (default: `$`), via the configuration
 `graphql.variable.mask`.
@@ -135,7 +135,7 @@ via the configuration `graphql.variable.seperator`.
 
 It is also possible to facilitate gauge table for dynamic replacement
 ```
-* When sending <file:/src/test/resources/popular_artists_variable.graphql> with 
+* When sending <file:src/test/resources/popular_artists_variable.graphql> with 
 
    |name|value|
    |----|-----|
@@ -146,8 +146,8 @@ whereas the column headers must be named `name` and `value`.
 It is also possible to use the result of a previous request as substitute for a variable
 ```
 ## stations around Frankfurt with table
-* When sending <file:/src/test/resources/dbahn_frankfurt.graphql>
-* And sending <file:/src/test/resources/dbahn_frankfurt_nearby.graphql> with 
+* When sending <file:src/test/resources/dbahn_frankfurt.graphql>
+* And sending <file:src/test/resources/dbahn_frankfurt_nearby.graphql> with 
 
    |name     |value                                |
    |---------|-------------------------------------|
@@ -179,7 +179,8 @@ In case there is a common token for login instead of a dynamic one (see `graphql
 ### grapqh.token.query
 *Optional*
 
-Name of the file, containing the query for the login. This file must be located in the `src/test/resources` folder and the username/email and password must be masked with `%s`.
+Name of the file, containing the query for the login. This file must be located in the `src/test/resources` folder and 
+the username/email and password must be masked with configuration: `graphql.variable.mask`.
 #### Example
 ```
 mutation {  
@@ -220,7 +221,7 @@ popular_artists(size: $size) {
 
 Defines the seperator of variable name and variable value in the step. Default is `:`
 #### Example
- `* When sending <file:/src/test/resources/popular_artists_variable.graphql> with "size:4"`
+ `* When sending <file:src/test/resources/popular_artists_variable.graphql> with "size:4"`
 
 ## Note  
 Gauge does not support currently multiline parameters, which means a query cannot be part of the step, but must  be referenced by an external file. Watch https://github.com/getgauge/gauge/issues/175 for this.
