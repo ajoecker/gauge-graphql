@@ -1,6 +1,6 @@
 package com.github.ajoecker.gauge.graphql.login;
 
-import com.github.ajoecker.gauge.graphql.GraphQLConnector;
+import com.github.ajoecker.gauge.graphql.Connector;
 import io.restassured.specification.RequestSpecification;
 
 /**
@@ -19,14 +19,14 @@ public interface LoginHandler {
      *
      * @param user             the user who logs in
      * @param password         the password of the user
-     * @param graphQLConnector the connector to send a possible login query with the credentials
+     * @param connector the connector to send a possible login query with the credentials
      */
-    void loginWithCredentials(String user, String password, GraphQLConnector graphQLConnector);
+    void loginWithCredentials(String user, String password, Connector connector);
 
     /**
      * Logs in with no given credentials, when no ones are required
      *
-     * @param graphQLConnector the connector to send a possible login query
+     * @param connector the connector to send a possible login query
      */
-    void loginWithNoCredentials(GraphQLConnector graphQLConnector);
+    void loginWithNoCredentials(Connector connector);
 }

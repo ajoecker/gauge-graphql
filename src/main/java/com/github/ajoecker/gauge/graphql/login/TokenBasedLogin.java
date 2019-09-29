@@ -1,6 +1,6 @@
 package com.github.ajoecker.gauge.graphql.login;
 
-import com.github.ajoecker.gauge.graphql.GraphQLConnector;
+import com.github.ajoecker.gauge.graphql.Connector;
 import com.github.ajoecker.gauge.graphql.Util;
 import com.google.common.base.Strings;
 import io.restassured.response.Response;
@@ -35,18 +35,18 @@ public final class TokenBasedLogin implements LoginHandler {
     }
 
     @Override
-    public void loginWithNoCredentials(GraphQLConnector graphQLConnector) {
-        loginToken = Optional.ofNullable(System.getenv("graphql.token")).orElse(sendLoginQuery(graphQLConnector, Function.identity()));
+    public void loginWithNoCredentials(Connector connector) {
+        loginToken = Optional.ofNullable(System.getenv("graphql.token")).orElse(sendLoginQuery(connector, Function.identity()));
     }
 
     @Override
-    public void loginWithCredentials(String user, String password, GraphQLConnector graphQLConnector) {
-        loginToken = sendLoginQuery(graphQLConnector, s -> Util.replaceVariablesInQuery(s, "user:" + user + seperator() + "password:" + password));
+    public void loginWithCredentials(String user, String password, Connector connector) {
+        loginToken = sendLoginQuery(connector, s -> Util.replaceVariablesInQuery(s, "user:" + user + seperator() + "password:" + password));
     }
 
-    private String sendLoginQuery(GraphQLConnector graphQLConnector, Function<String, String> queryMapper) {
+    private String sendLoginQuery(Connector connector, Function<String, String> queryMapper) {
         try {
-            Response sending = graphQLConnector.sending(readQuery(queryMapper));
+            Response sending = connector.sending(readQuery(queryMapper));
             return sending.then().extract().path(System.getenv("graphql.token.path"));
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);

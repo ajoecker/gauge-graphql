@@ -21,27 +21,36 @@ import static org.hamcrest.Matchers.*;
  */
 public class GaugeGraphQL {
     private Response response;
-    private final LoginHandler loginHandler = new TokenBasedLogin();
-    private final GraphQLConnector graphQLConnector = new GraphQLConnector();
+    private final LoginHandler loginHandler;
+    private final Connector connector;
+
+    public GaugeGraphQL() {
+        this(new GraphQLConnector(), new TokenBasedLogin());
+    }
+
+    GaugeGraphQL(Connector connector, LoginHandler loginHandler) {
+        this.connector = connector;
+        this.loginHandler = loginHandler;
+    }
 
     @Step("When sending <query>")
     public void sending(String query) {
-        response = graphQLConnector.sendingWithLogin(query, loginHandler);
+        response = connector.sendingWithLogin(query, loginHandler);
     }
 
     @Step("When sending <query> with <variables>")
     public void sendingWithVariables(String query, String variables) {
-        response = graphQLConnector.sendingWithLogin(replaceVariablesInQuery(query, variables), loginHandler);
+        response = connector.sendingWithLogin(replaceVariablesInQuery(query, variables), loginHandler);
     }
 
     @Step("Given <user> logs in with password <password>")
     public void login(String user, String password) {
-        loginHandler.loginWithCredentials(user, password, graphQLConnector);
+        loginHandler.loginWithCredentials(user, password, connector);
     }
 
     @Step("Given user logs in")
     public void loginWIthNoCredentials() {
-        loginHandler.loginWithNoCredentials(graphQLConnector);
+        loginHandler.loginWithNoCredentials(connector);
     }
 
     @Step({"Then <path> must contain <value>", "And <path> must contain <value>"})
