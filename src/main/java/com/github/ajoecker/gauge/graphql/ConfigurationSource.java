@@ -9,13 +9,13 @@ public interface ConfigurationSource {
     /**
      * Returns the string that masks a variable in the graphql query file.
      * <p>
-     * Default string is <code>$$</code> and is read in a Gauge project via the environment variable
+     * Default string is <code>$</code> and is read in a Gauge project via the environment variable
      * <code>graphql.variable.mask</code>. If this variable is not existing or empty, the default value is taken.
      * <p>
      * For example
      * <pre>
      *     {
-     *     popular_artists(size: $$size$$) {
+     *     popular_artists(size: $size) {
      *         artists {
      *             name
      *             nationality
@@ -27,7 +27,7 @@ public interface ConfigurationSource {
      * @return the mask or <code>$$</code> if non is defined
      */
     default String variableMask() {
-        return orDefault("graphql.variable.mask", "$$");
+        return orDefault("graphql.variable.mask", "$");
     }
 
     /**
@@ -76,6 +76,26 @@ public interface ConfigurationSource {
      * @return the masked string
      */
     default String mask(String s) {
-        return variableMask() + s + variableMask();
+        return variableMask() + s;
+    }
+
+    /**
+     * Unmasks a given {@link String} if it starts with {@link #variableMask()} or returns the String if not
+     *
+     * @param s string to unmask
+     * @return unmasekd string
+     */
+    default String unmask(String s) {
+        return isMasked(s) ? s.substring(variableMask().length()) : s;
+    }
+
+    /**
+     * Returns whether the given {@link String} is a variable and therefore masked.
+     *
+     * @param replacement the string to check
+     * @return whether the string is a variable
+     */
+    default boolean isMasked(String replacement) {
+        return replacement.startsWith(variableMask());
     }
 }

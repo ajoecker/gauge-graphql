@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static com.github.ajoecker.gauge.graphql.Util.replaceVariablesInQuery;
 import static com.github.ajoecker.gauge.graphql.Util.seperator;
 import static java.nio.file.Files.readString;
 
@@ -41,7 +42,7 @@ public final class TokenBasedLogin implements LoginHandler {
 
     @Override
     public void loginWithCredentials(String user, String password, Connector connector) {
-        loginToken = sendLoginQuery(connector, s -> Util.replaceVariablesInQuery(s, "user:" + user + seperator() + "password:" + password));
+        loginToken = sendLoginQuery(connector, s -> replaceVariablesInQuery(s, "user:" + user + seperator() + "password:" + password, Optional.empty()));
     }
 
     private String sendLoginQuery(Connector connector, Function<String, String> queryMapper) {

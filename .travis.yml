@@ -1,3 +1,7 @@
 language: java
 sudo: false
+<<<<<<< HEAD
 script: mvn clean verify
+=======
+script: mvn clean verify
+>>>>>>> 83de76cd67096cce81048ffb0cd68b43767d8e77

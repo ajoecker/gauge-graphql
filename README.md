@@ -1,7 +1,9 @@
 # Gauge Graphql Test Project  
 ## Idea  
 To have a simple and easy-usable project for testing graphql.  
-  
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ajoecker/gauge-graphql/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.ajoecker/gauge-graphql) [![Build Status](https://travis-ci.org/ajoecker/gauge-graphql.svg?branch=master)](https://travis-ci.org/ajoecker/gauge-graphql)
+
 ## Implementation  
 The implementation uses [http://gauge.org](http://gauge.org) as describer and runner of the automated tests and [http://rest-assured.io/](http://rest-assured.io/) as helper library.  
   
@@ -20,19 +22,32 @@ To use the library in a project simply put the following in the `pom.xml`
 <dependency>  
  <groupId>com.github.ajoecker</groupId>
  <artifactId>gauge-graphql</artifactId>
- <version>0.1-SNAPSHOT</version>
+ <version>0.2</version>
  <scope>test</scope>
 </dependency>  
 ``` 
 As long as the library is not part of a maven central you can either add it directly in our project or install it
 in your local maven repository.
 
+## Examples
+The project [gauge-graphql-example](https://github.com/ajoecker/gauge-graphql-example) shows some examples of the usage.
+
 ## New Testcases  
 To add new test cases one can either create a new spec file with the scenario(s) or add the new scenario to an   
 existing spec.  
   
 ### Building blocks  
-To add a new test case (scenario) one can re-use existing building blocks for the sake of simplicity.  
+To add a new test case (scenario) one can re-use existing building blocks for the sake of simplicity. 
+
+#### Define graphql endpoint
+The library allows to ways for defining the graphql endpoint to test.
+
+- In the environment of Gauge with the key `graphql.endpoint`
+- In a spec file as a common step `* Use "http://the-endpoint`
+
+The first one can be used to define a common endpoint for all specs and can be varied by using multiple gauge environments.
+
+The second can be used to define an endpoint on a spec based level and allows more flexibility if needed.
   
 #### Login required  
 If a login is required to execute subsequent queries, the first step of a scenario must be
@@ -99,7 +114,7 @@ verification can start with `And` instead of `Then` for better reading purpose.
 It is possible to use dynamic graphql queries, when using variables in the graphql file.
 ##### Example
 ```
-popular_artists(size: $$size$$) {
+popular_artists(size: $size) {
     artists {
         name
         nationality
@@ -110,21 +125,46 @@ When using variables, the `When` step in the spec file must replace this variabl
 
 Like
  
- `* When sending <file:/src/test/resources/popular_artists_variable.graphql> with "size:4"`
+ `* When sending <file:src/test/resources/popular_artists_variable.graphql> with "size:4"`
  
-It is possible to configure the string that masks the variable in the graphql file (default: `$$`), via the configuration
+It is possible to configure the string that masks the variable in the graphql file (default: `$`), via the configuration
 `graphql.variable.mask`.
 
 It is also possible to configure the seperator that divides the variable name with the variable value in the step (default `:`), 
 via the configuration `graphql.variable.seperator`.
 
+It is also possible to facilitate gauge table for dynamic replacement
+```
+* When sending <file:src/test/resources/popular_artists_variable.graphql> with 
+
+   |name|value|
+   |----|-----|
+   |size|4    |
+```
+whereas the column headers must be named `name` and `value`.
+
+It is also possible to use the result of a previous request as substitute for a variable
+```
+## stations around Frankfurt with table
+* When sending <file:src/test/resources/dbahn_frankfurt.graphql>
+* And sending <file:src/test/resources/dbahn_frankfurt_nearby.graphql> with 
+
+   |name     |value                                |
+   |---------|-------------------------------------|
+   |latitude |$stationWithEvaId.location.latitude  | 
+   |longitude|$stationWithEvaId.location.longitude |
+   |radius   |2000                                 |
+```
+the first two values are masked to identify them as variables and contain the full path to a single value (list values are currently not supported).
+
+The values are used in the second request to replace any variables in the query named `latitude` and `longitude`.
 ## Configuration
 In the Gauge environment the following keys are recognized
  
 ### graphql.endpoint
 *Mandatory*
 
-The url to the graphql api
+The url to the graphql api. Only mandatory if the endpoint is not given in the spec file directly.
  
 ### graphql.debug
 *Optional*
@@ -139,11 +179,12 @@ In case there is a common token for login instead of a dynamic one (see `graphql
 ### grapqh.token.query
 *Optional*
 
-Name of the file, containing the query for the login. This file must be located in the `src/test/resources` folder and the username/email and password must be masked with `%s`.
+Name of the file, containing the query for the login. This file must be located in the `src/test/resources` folder and 
+the username/email and password must be masked with configuration: `graphql.variable.mask`.
 #### Example
 ```
 mutation {  
-    login(email: "$$user$$", password: "$$password$$") {  
+    login(email: "$user", password: "$password") {  
         token  
     }  
 }
@@ -168,7 +209,7 @@ Defines the seperator in the verifying step to define multiple elements that nee
 Defines the string that masks a variable in the graphql file
 #### Example
 ```
-popular_artists(size: $$size$$) {
+popular_artists(size: $size) {
     artists {
         name
         nationality
@@ -180,7 +221,7 @@ popular_artists(size: $$size$$) {
 
 Defines the seperator of variable name and variable value in the step. Default is `:`
 #### Example
- `* When sending <file:/src/test/resources/popular_artists_variable.graphql> with "size:4"`
+ `* When sending <file:src/test/resources/popular_artists_variable.graphql> with "size:4"`
 
 ## Note  
 Gauge does not support currently multiline parameters, which means a query cannot be part of the step, but must  be referenced by an external file. Watch https://github.com/getgauge/gauge/issues/175 for this.

@@ -9,21 +9,47 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public interface Connector {
-    default Response sending(String query) {
+public abstract class Connector {
+    private String endpoint;
+
+    public Connector() {
+        setEndpoint(System.getenv("graphql.endpoint"));
+    }
+
+    public final String getEndpoint() {
+        return endpoint;
+    }
+
+    public final void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
+
+    public final Response sending(String query) {
         return post(query, startRequest());
     }
 
-    default Response sendingWithLogin(String query, LoginHandler loginHandler) {
+    public final Response get(String query) {
+        return get(query, startRequest());
+    }
+
+    public final Response sendingWithLogin(String query, LoginHandler loginHandler) {
         RequestSpecification request = startRequest();
         loginHandler.setLogin(request);
         return post(query, request);
     }
 
-    Response post(String query, RequestSpecification request);
+    public final Response getWithLogin(String query, LoginHandler loginHandler) {
+        RequestSpecification request = startRequest();
+        loginHandler.setLogin(request);
+        return get(query, request);
+    }
 
-    default Response get(String query, RequestSpecification request) {
+    abstract Response post(String query, RequestSpecification request);
 
+    public final Response get(String query, RequestSpecification request) {
+        return request.contentType(ContentType.JSON)
+                .when()
+                .get(getEndpoint() + "/" + query);
     }
 
     private RequestSpecification startRequest() {
