@@ -4,15 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.ajoecker</groupId>
-    <artifactId>gauge-graphql</artifactId>
-    <version>0.2</version>
-    <packaging>jar</packaging>
+    <artifactId>gauge-services</artifactId>
+    <version>0.3-SNAPSHOT</version>
+    <modules>
+        <module>gauge-graphql</module>
+        <module>gauge-services-common</module>
+        <module>gauge-rest</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>Library to automate graphql tests with Gauge</name>
     <description>The library provides several step templates for Gauge scenarios to execute graphql queries and verifier
         their responses.
     </description>
-    <url>https://github.com/ajoecker/gauge-graphql</url>
+    <url>https://github.com/ajoecker/gauge-service</url>
 
     <licenses>
         <license>
@@ -31,39 +36,14 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/ajoecker/gauge-graphql.git</connection>
-        <developerConnection>scm:git:ssh://github.com:ajoecker/gauge-graphql.git</developerConnection>
-        <url>http://github.com/ajoecker/gauge-graphql/tree/master</url>
+        <connection>scm:git:git://github.com/ajoecker/gauge-service.git</connection>
+        <developerConnection>scm:git:ssh://github.com:ajoecker/gauge-service.git</developerConnection>
+        <url>http://github.com/ajoecker/gauge-service/tree/master</url>
     </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.thoughtworks.gauge</groupId>
-            <artifactId>gauge-java</artifactId>
-            <version>0.7.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.5.0-M1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <distributionManagement>
         <snapshotRepository>
