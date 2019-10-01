@@ -1,3 +1,5 @@
+# ARCHIVED --> see https://github.com/ajoecker/gauge-services
+
 # Gauge Graphql Test Project  
 ## Idea  
 To have a simple and easy-usable project for testing graphql.  
